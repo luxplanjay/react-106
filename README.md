@@ -30,19 +30,5 @@
   - Метод `map`
   - Ключі елементів з `key`
   - Компоненти списку та елементу
-- Властивість `props.children`
-- Делой додатка на Vercel
-
-## JSX картки пейменту
-
-```jsx
-<div>
-  <p>Amount: </p>
-  <p>Status: Paid or Pending</p>
-  <p>Description: </p>
-  <p>Card Number: </p>
-  <p>Card Type: </p>
-  <p>Card Holder Name: </p>
-  <p>Payment Date: </p>
-</div>
-```
+- ⚠️ Властивість `props.children`
+- ⚠️ Делой додатка на Vercel
