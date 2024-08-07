@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Jacob Mercer",
+    "rank": "Commander",
+    "age": 42,
+    "spec": "Fighter Pilot",
+    "skills": ["Combat Maneuvers", "Navigation", "Strategic Planning"],
+    "active": true,
+    "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXCSDHwbsJksZlqccC_Hdmaf75zl3VG0aTDnUQxS0uBbL9EjMOjejBe2fPQb9Gyh2rZ8w&usqp=CAU"
+  },
+  {
+    "id": 2,
+    "name": "Adrian Cross",
+    "rank": "Lieutenant",
+    "age": 35,
+    "spec": "Reconnaissance",
+    "skills": ["Stealth Operations", "Surveillance", "Data Analysis"],
+    "active": true,
+    "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuIxJh17uuyzMZG_I-EnV_O_u98uYFEax1Mmn74kb1H2ErmDSKePL8l7TVDPKps-lwLXw&usqp=CAU"
+  },
+  {
+    "id": 3,
+    "name": "Olawande Brawar",
+    "rank": "Captain",
+    "age": 50,
+    "spec": "Transport Pilot",
+    "skills": ["Astrogation", "Cargo Handling", "Emergency Response"],
+    "active": false,
+    "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Vmtqupl5WKIsVe83rJSzJmWfIn-sdOq9P8Rk8iY7ymK6ZhgRrNv85sgYAjwHUsCiik0&usqp=CAU"
+  }
+]

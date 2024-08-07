@@ -15,8 +15,10 @@
   - Використання
   - Композиція класів з бібліотекою [clsx](https://www.npmjs.com/package/clsx)
 - Нормалізація стилів з [modern-normalize](https://www.npmjs.com/package/modern-normalize)
-- Імпорт локальних зображень (зображення у папці `assets`)
+- Імпорт локальних зображень
 - Бібліотека [React Icons](https://react-icons.github.io/react-icons/)
 - Імпорт кастомних SVG іконок
   - Налаштування `vite-plugin-svgr` у `vite.config.js`
-  - Імпорт (дефолтний) SVG файлу як компонента (зображення у папці `assets`)
+  - Імпорт SVG файлу як компонента
+- Властивість `props.children`
+- Делой додатка на Vercel
