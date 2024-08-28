@@ -3,17 +3,36 @@
  * зробити кастомні контроли (play, pause, currentTime, timeupdate).
  */
 
+import { useRef } from "react";
+
 export default function Player() {
+  const playerRef = useRef();
+
+  const play = () => {
+    playerRef.current.play();
+    console.log(playerRef.current.currentTime);
+  };
+
+  const pause = () => {
+    playerRef.current.pause();
+  };
+
+  const stop = () => {
+    playerRef.current.pause();
+    playerRef.current.currentTime = 0;
+  };
+
   return (
     <div>
       <audio
+        ref={playerRef}
         type="audio/mp3"
         src="https://github.com/rafaelreis-hotmart/Audio-Sample-files/raw/master/sample.mp3"
-        controls
+        // controls
       ></audio>
-      {/* <button>Play</button>
-      <button>Pause</button>
-      <button>Stop</button> */}
+      <button onClick={play}>Play</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={stop}>Stop</button>
     </div>
   );
 }

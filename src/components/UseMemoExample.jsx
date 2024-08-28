@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+
+// 1. Чи є у мене обчислення яке використовує стан або пропси? > Так
+// 2. Чи є в компоненті стан або пропси які не приймаються участі у обчисленні? > Так
+// 3. Використовуєм useMemo
 
 export default function UseMemoExample() {
   const [users, setUsers] = useState([
@@ -9,6 +13,8 @@ export default function UseMemoExample() {
     { id: 5, name: "Nathaniel" },
   ]);
   const [nameFilter, setNameFilter] = useState("");
+
+  const [clicks, setClicks] = useState(0);
 
   const addUser = () => {
     setUsers((prevUsers) => [
@@ -21,13 +27,20 @@ export default function UseMemoExample() {
     setNameFilter(event.target.value);
   };
 
-  console.log("Filtering users");
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(nameFilter.toLowerCase())
-  );
+  // const filteredUsers = users.filter((user) =>
+  //   user.name.toLowerCase().includes(nameFilter.toLowerCase())
+  // );
+
+  const filteredUsers = useMemo(() => {
+    console.log("Filtering users");
+    return users.filter((user) =>
+      user.name.toLowerCase().includes(nameFilter.toLowerCase())
+    );
+  }, [nameFilter, users]);
 
   return (
     <div>
+      <button onClick={() => setClicks(clicks + 1)}>Add clicks {clicks}</button>
       <button onClick={addUser}>Add random user</button>
       <input type="text" value={nameFilter} onChange={changeFilter} />
       <ul>

@@ -6,6 +6,8 @@
  * - scrollTo
  */
 
+import { useRef } from "react";
+
 const formStyles = {
   display: "grid",
   width: 320,
@@ -15,7 +17,16 @@ const formStyles = {
 };
 
 export default function Form() {
-  const handleScroll = () => {};
+  const formRef = useRef();
+
+  const handleScroll = () => {
+    const dims = formRef.current.getBoundingClientRect();
+
+    scrollTo({
+      top: dims.y,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
@@ -202,7 +213,7 @@ export default function Form() {
         </p>
       </div>
 
-      <form style={formStyles}>
+      <form style={formStyles} ref={formRef}>
         <input type="email" placeholder="Your email" />
         <button>Schedule now</button>
       </form>

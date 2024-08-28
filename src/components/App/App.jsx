@@ -2,8 +2,8 @@
 // import RefBasics from "../RefBasics";
 // import Form from "../Form";
 // import Player from "../Player";
-// import AppHeader from "../AppHeader/AppHeader";
-// import LangMessage from "../LangMessage";
+import AppHeader from "../AppHeader/AppHeader";
+import LangMessage from "../LangMessage";
 import css from "./App.module.css";
 
 export default function App() {
@@ -13,8 +13,8 @@ export default function App() {
       {/* <RefBasics /> */}
       {/* <Form /> */}
       {/* <Player /> */}
-      {/* <AppHeader /> */}
-      {/* <LangMessage /> */}
+      <AppHeader />
+      <LangMessage />
     </div>
   );
 }
