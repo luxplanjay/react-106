@@ -35,7 +35,7 @@ https://65c23f3af7e6ea59682af8d1.mockapi.io
 - `/payments/:paymentId` - сторінка деталей платежу
 - `/payments/:paymentId/bank` - вкладений маршрут інформації про банк
 - `/payments/:paymentId/receipt` - вкладений маршрут інформації про чек
-- `*` - компонент сторінки помилки
+- `*` - сторінка помилки неіснуючого маршрута (404)
 
 ### Components
 
