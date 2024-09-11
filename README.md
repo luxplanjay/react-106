@@ -1,13 +1,22 @@
 # Заняття 12 - Бібліотека Redux Toolkit
 
-- Спрощення Redux коду за допомогою утиліт
-- Функція `createReducer(initialState, builderCallback)`
-  - Оголошення case-редюсерів з `addCase`
-  - Бібліотека Immer і зміна стану
-- Функція `createSlice`
-  - Властивість `reducers`
-  - Вміст `payload`
-- Бібліотека [Redux Persist](https://www.npmjs.com/package/redux-persist)
-  - Створення конфігурації
-  - Створення `persistor`
-  - Додавання `PersistGate`
+## Слайси стану
+
+- Концепція слайсів стану
+- Розділення коду кореневого редюсера на редюсери слайсів
+- Створення файлів слайсів `balanceSlice.js` та `localeSlice.js`
+
+## Функція `createSlice`
+
+- Створення слайса
+- Властивості `name` та `initialState`
+- Властивість `reducers` та case-редюсери
+- Експорт фабрик екшенів
+- Експорт кореневого редюсера
+- Використання `Immer` для оновлення стану у case-редюсерах слайсів
+
+## Бібліотека [Redux Persist](https://www.npmjs.com/package/redux-persist)
+
+- Створення конфігурації
+- Створення `persistor`
+- Додавання `PersistGate`

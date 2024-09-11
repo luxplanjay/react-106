@@ -1,15 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deposit, withdraw } from "../redux/balanceSlice";
+import { deposit, withdraw, selectBalance } from "../redux/balanceSlice";
 
 export default function Balance() {
   const dispatch = useDispatch();
-  const balance = useSelector((state) => state.balance.value);
+  const balance = useSelector(selectBalance);
+
+  const handleDeposit = () => {
+    dispatch(deposit(100));
+  };
+
+  const handleWithdraw = () => {
+    dispatch(withdraw(50));
+  };
 
   return (
     <div>
       <p>Balance: {balance} credits</p>
-      <button onClick={() => dispatch(deposit(10))}>Deposit 10 credits</button>
-      <button onClick={() => dispatch(withdraw(5))}>Withdraw 5 credits</button>
+      <button onClick={handleDeposit}>Deposit credits</button>
+      <button onClick={handleWithdraw}>Withdraw credits</button>
     </div>
   );
 }
