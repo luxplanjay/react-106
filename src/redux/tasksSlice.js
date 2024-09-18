@@ -1,54 +1,130 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchTasks, addTask, deleteTask } from "./tasksOps";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { fetchTasks, addTask, deleteTask, toggleCompleted } from "./operations";
+import { selectStatusFilter } from "./filtersSlice";
 
-const slice = createSlice({
+const handlePending = (state) => {
+  state.isLoading = true;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
+
+const tasksSlice = createSlice({
   name: "tasks",
   initialState: {
     items: [],
-    loading: false,
+    isLoading: false,
     error: null,
   },
-  extraReducers: (builder) =>
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchTasks.pending, (state) => {
-        state.error = null;
-        state.loading = true;
-      })
+      .addCase(fetchTasks.pending, handlePending)
       .addCase(fetchTasks.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = null;
         state.items = action.payload;
       })
-      .addCase(fetchTasks.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(addTask.pending, (state) => {
-        state.error = null;
-        state.loading = true;
-      })
+      .addCase(fetchTasks.rejected, handleRejected)
+      .addCase(addTask.pending, handlePending)
       .addCase(addTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.items.push(action.payload);
       })
-      .addCase(addTask.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(deleteTask.pending, (state) => {
-        state.error = null;
-        state.loading = true;
-      })
+      .addCase(addTask.rejected, handleRejected)
+      .addCase(deleteTask.pending, handlePending)
       .addCase(deleteTask.fulfilled, (state, action) => {
-        state.loading = false;
-
-        state.items = state.items.filter(item => item.id !== action.payload.id);
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex(
+          (task) => task.id === action.payload.id
+        );
+        state.items.splice(index, 1);
       })
-      .addCase(deleteTask.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      }),
+      .addCase(deleteTask.rejected, handleRejected)
+      .addCase(toggleCompleted.pending, handlePending)
+      .addCase(toggleCompleted.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex(
+          (task) => task.id === action.payload.id
+        );
+        state.items.splice(index, 1, action.payload);
+      })
+      .addCase(toggleCompleted.rejected, handleRejected);
+  },
 });
 
-export default slice.reducer;
+export const tasksReducer = tasksSlice.reducer;
+
+export const selectTasks = (state) => state.tasks.items;
+
+export const selectIsLoading = (state) => state.tasks.isLoading;
+
+export const selectError = (state) => state.tasks.error;
+
+// export const selectTaskCount = (state) => {
+//   const tasks = selectTasks(state);
+
+//   console.log("selectTaskCount" + Date.now());
+
+//   return tasks.reduce(
+//     (acc, task) => {
+//       if (task.completed) {
+//         acc.completed += 1;
+//       } else {
+//         acc.active += 1;
+//       }
+//       return acc;
+//     },
+//     { active: 0, completed: 0 }
+//   );
+// };
+
+export const selectTaskCount = createSelector([selectTasks], (tasks) => {
+  console.log("selectTaskCount" + Date.now());
+
+  return tasks.reduce(
+    (acc, task) => {
+      if (task.completed) {
+        acc.completed += 1;
+      } else {
+        acc.active += 1;
+      }
+      return acc;
+    },
+    { active: 0, completed: 0 }
+  );
+});
+
+// export const selectVisibleTasks = (state) => {
+//   const tasks = selectTasks(state);
+//   const statusFilter = selectStatusFilter(state);
+
+//   switch (statusFilter) {
+//     case "active":
+//       return tasks.filter((task) => !task.completed);
+//     case "completed":
+//       return tasks.filter((task) => task.completed);
+//     default:
+//       return tasks;
+//   }
+// };
+
+export const selectVisibleTasks = createSelector(
+  [selectTasks, selectStatusFilter],
+  (tasks, statusFilter) => {
+    // console.log("selectVisibleTasks" + Date.now());
+
+    switch (statusFilter) {
+      case "active":
+        return tasks.filter((task) => !task.completed);
+      case "completed":
+        return tasks.filter((task) => task.completed);
+      default:
+        return tasks;
+    }
+  }
+);
