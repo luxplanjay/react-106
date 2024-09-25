@@ -4,11 +4,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 axios.defaults.baseURL = "https://task-manager-api.goit.global/";
 
 const setAuthHeader = (token) => {
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 const clearAuthHeader = () => {
-  axios.defaults.headers.common["Authorization"] = "";
+  axios.defaults.headers.common.Authorization = "";
 };
 
 /*
@@ -19,13 +19,13 @@ const clearAuthHeader = () => {
  */
 export const register = createAsyncThunk(
   "auth/register",
-  async (userInfo, thunkAPI) => {
+  async (credentials, thunkApi) => {
     try {
-      const response = await axios.post("/users/signup", userInfo);
-      setAuthHeader(response.data.token);
-      return response.data;
+      const { data } = await axios.post("/users/signup", credentials);
+      setAuthHeader(data.token);
+      return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -55,12 +55,12 @@ export const logIn = createAsyncThunk(
  *
  * After a successful logout, remove the token from the HTTP header
  */
-export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkApi) => {
   try {
-    await axios.post("/users/logout");
+    await axios.post("users/logout");
     clearAuthHeader();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
@@ -70,14 +70,16 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
  */
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
-  async () => {
-    // Reading the token from the state via getState()
-    // Add it to the HTTP header and perform the request
+  async (_, thunkAPI) => {
+    const reduxState = thunkAPI.getState();
+    setAuthHeader(reduxState.auth.token);
+    const response = await axios.get("/users/me");
+    return response.data;
   },
   {
-    condition: () => {
-      // Reading the token from the state via getState()
-      // If there is no token, exit without performing any request
+    condition: (_, thunkAPI) => {
+      const reduxState = thunkAPI.getState();
+      return reduxState.auth.token !== null;
     },
   }
 );

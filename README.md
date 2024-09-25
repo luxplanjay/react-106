@@ -14,3 +14,9 @@
 - Розглянути концепцію редіректів на прикладі процесу логіна
 - Створити компоненти `PrivateRoute` та `RestrictedRoute`
 - Використати компоненти для обгортання маршрутів
+
+## Матеріли
+
+- https://www.youtube.com/@reactdev/playlists
+- https://www.freecodecamp.org/
+- https://www.youtube.com/@freecodecamp/featured

@@ -1,10 +1,12 @@
 import { Formik, Form, Field } from "formik";
-import { useDispatch } from "react-redux";
-import { logIn } from "../../redux/auth/operations";
 import css from "./LoginForm.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn } from "../../redux/auth/operations";
+import { selectIsLoading } from "../../redux/auth/selectors";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
 
   const handleSubmit = (values, actions) => {
     dispatch(logIn(values));
@@ -28,7 +30,9 @@ export default function LoginForm() {
           Password
           <Field type="password" name="password" />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={isLoading}>
+          Log In
+        </button>
       </Form>
     </Formik>
   );
